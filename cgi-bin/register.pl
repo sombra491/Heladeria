@@ -40,17 +40,17 @@ $sth->finish;
 ##Condisionales 
 if($userName_aux eq $userName){$info=$error.'<br><h4>Ya existe el usuario</h4>';}
 elsif($largoContra<8){$info=$error.'<br><h4>Contraseña muy corta minimo 8</h4>';}
+elsif($userName eq "GERENTE"){
+	my $sth1 = $dbh->prepare("INSERT INTO usuario(user, password, permiso) VALUES (?,?,?)");
+	$sth1->execute($userName , $password , "gerente");
+	$sth1->finish;
+	$info='<h4>Se creo el gerente '.$userName .'</h4>';
+}
 elsif($password eq $password2){
 	my $sth1 = $dbh->prepare("INSERT INTO usuario(user, password, permiso) VALUES (?,?,?)");
 	$sth1->execute($userName , $password , "cliente");
 	$sth1->finish;
 	$info='<h4>Se creo el usuario '.$userName .'</h4>';
-}
-elsif($userName eq "ADMIN"){
-	my $sth1 = $dbh->prepare("INSERT INTO usuario(user, password, permiso) VALUES (?,?,?)");
-	$sth1->execute($userName , $password , "gerente");
-	$sth1->finish;
-	$info='<h4>Se creo el gerente '.$userName .'</h4>';
 }
 else {$info=$error.'<br><h4>No conciden los passwords</h4>';}
 ##Nos desconectamos de la BD.

@@ -57,13 +57,60 @@ elsif($password_aux eq $password){
 		<th><h2>Eliminar</h2></th>
 		</tr>';}
 	else {$info="";}
-	my $sth1 = $dbh->prepare("SELECT * FROM usuario WHERE (user=?)");
-	$sth1->execute($user);
+	my $sth1 = $dbh->prepare("SELECT * FROM articulos");
+	$sth1->execute();
 	while( my @row = $sth1->fetchrow_array ) {
-		
+		$info='<tr>
+		<th><h2>'.$row[0].'</h2></th>
+		<th><h2>'.$row[2].'</h2></th>
+		<th><h2>'.$row[1].'</h2></th>
+		<th><h2><form method=GET action="./comprar.pl">
+				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=submit value="mirar" style="height: 30px;">
+			</form></h2></th>';
+		if($permiso eq "cliente"){	
+		$info=$info.'</tr>';}
+		elsif($permiso eq "encargado"){	
+		$info=$info.'<th><h2><form method=GET action="./edit.pl">
+				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=submit value="mirar" style="height: 30px;">
+			</form></h2></th>
+		<th><h2><form method=GET action="./delete.pl">
+				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=submit value="mirar" style="height: 30px;">
+			</form></h2></th>
+		</tr>';}
+		elsif($permiso eq "gerente"){	
+		$info=$info.'<th><h2><form method=GET action="./edit.pl">
+				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=submit value="mirar" style="height: 30px;">
+			</form></h2></th>
+		<th><h2><form method=GET action="./delete.pl">
+				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=submit value="mirar" style="height: 30px;">
+			</form></h2></th>
+		</tr>';}
+		else {$info="";}
 	}
 	$sth1->finish;
-	
+	$info=$info.'</table>';
+	if(($permiso eq "encargado")||($permiso eq "gerente")){
+		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'block'".'">Nuevo articulo</button>';
+			$info=$info.'<div id="new"  style="display:none">
+			<form method=GET action="./new.pl">
+			<h4> Articulo</h4> 
+			<input type=text name=title size=30 maxlength=30 value="" style="height: 30px;" required>
+			<h4> Costo</h4> 
+			<input type=number name=title size=30 maxlength=30 value="" style="height: 30px;" step=0.01 min=0 required>
+			<h4> Cantidad</h4> 
+			<input type=number name=title size=30 maxlength=30 value="" style="height: 30px;" min=0 required>
+			<input type=submit value="guardar" style="height: 30px;">
+			</form>'.'</div>';
+		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'none'".'">Ocultar</button>';	
+	}
+	if($permiso eq "gerente"){
+		##modifcador de permiso en proceso
+	}
 }
 else {$info=$error.'<br><h4>Contraseña incorrecta</h4>';}
 
