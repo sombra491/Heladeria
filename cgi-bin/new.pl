@@ -37,6 +37,17 @@ if($articulo_aux eq ""){
 				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
 }
+elsif($edit eq "true"){
+	my $sth1 = $dbh->prepare("UPDATE articulos SET cantidad=? costo=? where articulo=?");
+	$sth1->execute($cantidad, $costo , $articulo);
+	$sth1->finish;
+	$info='<h4>Se modifico el articulo '.$articulo.'</h4>'.
+	'<h4>Con la cantidad '.$cantidad.'</h4>'.
+	'<h4>Con el costo '.$costo.'</h4>'.
+	'<form method=GET action="./list.pl">
+				<input type=submit value="regresar" style="height: 30px;">
+			</form>';
+}
 else {$info='<form method=GET action="./new.pl">
 			<h4> Articulo</h4> 
 			<input type=text name=articulo size=30 maxlength=30 value="" style="height: 30px;" required>

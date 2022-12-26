@@ -72,21 +72,21 @@ elsif($password_aux eq $password){
 		$info=$info.'</tr>';}
 		elsif($permiso eq "encargado"){	
 		$info=$info.'<th><h2><form method=GET action="./edit.pl">
-				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="editar" style="height: 30px;">
 			</form></h2></th>
 		<th><h2><form method=GET action="./delete.pl">
-				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="borrar" style="height: 30px;">
 			</form></h2></th>
 		</tr>';}
 		elsif($permiso eq "gerente"){	
 		$info=$info.'<th><h2><form method=GET action="./edit.pl">
-				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="editar" style="height: 30px;">
 			</form></h2></th>
 		<th><h2><form method=GET action="./delete.pl">
-				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="borrar" style="height: 30px;">
 			</form></h2></th>
 		</tr>';}
