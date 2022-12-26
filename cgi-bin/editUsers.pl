@@ -3,7 +3,10 @@ use strict;
 use CGI ':standard';
 use DBI;
 my $user = param('user');
+my $userEdit = param('userEdit');
 my $password = param('password');
+my $modo = param('modo');
+my $nuevoPermiso = param('nuevoPermiso');
 ##abrimos el BD
 my $host="servidor"; 
 my $base_datos="heladeria";  
@@ -11,37 +14,55 @@ my $usuario="alumno";
 my $clave="pweb1";  
 my $driver="mysql";  
 ##Conectamos con la BD.
+my $info;
 my $dbh = DBI-> connect ("dbi:$driver:database=$base_datos;
 host=$host", $usuario, $clave)
 || die "nError al abrir la base datos: $DBI::errstrn";
-##select
-my $permiso;
-	my $sth1 = $dbh->prepare("SELECT * FROM usuario");
-	$sth1->execute();
-	my $info='<table style="width:100%">
-		<tr>
-		<th><h2>Usuario</h2></th>
-		<th><h2>Permiso</h2></th>
-		<th><h2>Editar o eliminar</h2></th></tr>';
-	while( my @row = $sth1->fetchrow_array ) {
-		$info=$info.'<tr>
-		<th><h2>'.$row[0].'</h2></th>
-		<th><h2>'.$row[2].'</h2></th>
-		<th><form method=POST action="./editUsers.pl">
-				<input type=hidden name=user value="'.$user .'">
-				<input type=hidden name=password value="'.$password .'">
-				<input type=hidden name=userEdit value="'.$row[0].'">
-				<input type=submit name=modo value="editar" style="height: 30px;">
-				<input type=submit name=modo value="eliminar" style="height: 30px;">
-			</form></th></tr>';
-	}
-	$sth1->finish;
-$info=$info.'</table>';
-$info=$info.'<form method=POST action="./list.pl">
+##condicionales
+if($modo eq "eliminar"){
+my $sth1 = $dbh->prepare("DELETE FROM usuario WHERE (user=?)");
+$sth1->execute($userEdit);
+$sth1->finish;
+$info='<h4>Se borro la cuenta '.$userEdit.'</h4>
+<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
 				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
+}
+elsif($nuevoPermiso eq ""){
+$info='<form method=POST action="./editUsers.pl">
+				<h4>'.$userEdit.'</h4>
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=hidden name=userEdit value="'.$userEdit.'">
+				<input type=hidden name=modo value="editar">
+				<select name="nuevoPermiso">
+				<option>cliente</option>
+				<option>encargado</option>
+				<option>gerente</option>
+				</select>
+				<input type=submit value="Cambiar" style="height: 30px;">
+				</form>
+				<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
+				</form>'
+}
+elsif(($nuevoPermiso eq "cliente")||($nuevoPermiso eq "encargado")||($nuevoPermiso eq "gerente")){
+	my $sth2 = $dbh->prepare("UPDATE usuario SET permiso=? where user=?");
+	$sth2->execute($nuevoPermiso, $userEdit );
+	$sth2->finish;
+	$info='<h4>Se cambio el permiso de '.$userEdit.' a '. $nuevoPermiso.'</h4>
+			<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
+			</form>';}
+
+
+	my $permiso;
 	my $sth = $dbh->prepare("SELECT * FROM usuario where(user=?)");
 	$sth->execute($user);
 	while( my @row = $sth->fetchrow_array ) {
