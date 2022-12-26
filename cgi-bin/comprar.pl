@@ -4,6 +4,8 @@ use CGI ':standard';
 use DBI;
 my $articulo = param('articulo');
 my $cantidad = param('cantidad');
+my $user = param('user');
+my $password = param('password');
 ##abrimos el BD
 my $host="servidor"; 
 my $base_datos="heladeria";  
@@ -28,7 +30,9 @@ while( my @row = $sth->fetchrow_array ) {
 	$costo=$row[2];
 	}
 $sth->finish;
-my $error='<form method=GET action="./comprar.pl">
+my $error='<form method=POST action="./comprar.pl">
+			<input type=hidden name=user value="'.$user.'">
+			<input type=hidden name=password value="'.$password.'">
 			<h4>'.$articulo.' </h4>
 			<input type=hidden name=articulo value="'.$articulo.'">
 			<h4> Costo es de S/.'.$costo.'</h4> 
@@ -36,13 +40,16 @@ my $error='<form method=GET action="./comprar.pl">
 			<input type=number name=cantidad size=30 maxlength=30 value=$cantidad_aux style="height: 30px;" min=0 required>
 			<input type=submit value="comprar" style="height: 30px;">
 			</form>
-			<form method=GET action="./list.pl">
-				<input type=submit value="cancelar" style="height: 30px;">
+			<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
 ##condicionales
 my $resultante=$cantidad_aux-$cantidad;
 my $multi=$cantidad*$costo;
 if($cantidad eq ""){$info=$error;}
+elsif($costo eq ""){$info=$error.'<br><h4>ya no existe el producto</h4>';}
 elsif($resultante>=0){
 	my $sth1 = $dbh->prepare("UPDATE articulos SET cantidad=? where articulo=?");
 	$sth1->execute($resultante, $articulo);
@@ -53,8 +60,10 @@ elsif($resultante>=0){
 	<h4> Cantidad '.$cantidad.'</h4>
 	<h4> Pago total es  '.$multi.'</h4>
 	<button onclick="window.print()">imprime recibo</button><br><br><br>
-	<form method=GET action="./list.pl">
-				<input type=submit value="Retroceder" style="height: 30px;">
+	<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
 }
 else {$info=$error.'<h4>No existe esa cantidad de productos</h4>';}

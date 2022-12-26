@@ -3,6 +3,8 @@ use strict;
 use CGI ':standard';
 use DBI;
 my $articulo = param('articulo');
+my $user = param('user');
+my $password = param('password');
 ##abrimos el BD
 my $host="servidor"; 
 my $base_datos="heladeria";  
@@ -26,6 +28,13 @@ while( my @row = $sth->fetchrow_array ) {
 	$costo=$row[2];
 	}
 $sth->finish;
+my $registro='<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">';
+my $regreso='<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
+			</form>';
 ##Nos desconectamos de la BD.
 $dbh-> disconnect ||
 warn "nFallo al desconectar.nError: $DBI::errstrn";
@@ -49,8 +58,9 @@ print <<ENDHTML;
   </tr>
 </table>
 <center>
-<form method=GET action="./new.pl">
+<form method=POST action="./new.pl">
 				<input type=hidden name=edit value="true">
+			$registro
 			<h4> Articulo</h4> 
 			<h4>$articulo_aux</h4>
 			<input type=hidden name=articulo value="$articulo_aux">
@@ -60,9 +70,7 @@ print <<ENDHTML;
 			<input type=number name=cantidad size=30 maxlength=30 value=$cantidad_aux style="height: 30px;" min=0 required>
 			<input type=submit value="guardar" style="height: 30px;">
 			</form>
-			<form method=GET action="./list.pl">
-				<input type=submit value="cancelar" style="height: 30px;">
-			</form>
+			$regreso
 </center>
 </body>
 </html>

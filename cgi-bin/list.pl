@@ -64,28 +64,38 @@ elsif($password_aux eq $password){
 		<th><h2>'.$row[0].'</h2></th>
 		<th><h2>S/.'.$row[2].'</h2></th>
 		<th><h2>'.$row[1].'</h2></th>
-		<th><h2><form method=GET action="./comprar.pl">
+		<th><h2><form method=POST action="./comprar.pl">
+				<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="comprar" style="height: 30px;">
 			</form></h2></th>';
 		if($permiso eq "cliente"){	
 		$info=$info.'</tr>';}
 		elsif($permiso eq "encargado"){	
-		$info=$info.'<th><h2><form method=GET action="./edit.pl">
+		$info=$info.'<th><h2><form method=POST action="./edit.pl">
+				<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="editar" style="height: 30px;">
-			</form></h2></th>
-		<th><h2><form method=GET action="./delete.pl">
+				</form></h2></th>
+				<th><h2><form method=POST action="./delete.pl">
+				<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="borrar" style="height: 30px;">
 			</form></h2></th>
 		</tr>';}
 		elsif($permiso eq "gerente"){	
-		$info=$info.'<th><h2><form method=GET action="./edit.pl">
+		$info=$info.'<th><h2><form method=POST action="./edit.pl">
+				<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="editar" style="height: 30px;">
-			</form></h2></th>
-		<th><h2><form method=GET action="./delete.pl">
+				</form></h2></th>
+				<th><h2><form method=POST action="./delete.pl">
+				<input type=hidden name=user value="'.$user.'">
+				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="borrar" style="height: 30px;">
 			</form></h2></th>
@@ -97,7 +107,7 @@ elsif($password_aux eq $password){
 	if(($permiso eq "encargado")||($permiso eq "gerente")){
 		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'block'".'">Nuevo articulo</button>';
 			$info=$info.'<div id="new"  style="display:none">
-			<form method=GET action="./new.pl">
+			<form method=POST action="./new.pl">
 			<h4> Articulo</h4> 
 			<input type=text name=articulo size=30 maxlength=30 value="" style="height: 30px;" required>
 			<h4> Costo</h4> 
@@ -109,7 +119,9 @@ elsif($password_aux eq $password){
 		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'none'".'">Ocultar</button>';	
 	}
 	if($permiso eq "gerente"){
-		$info=$info.'<br><br><br><form method=GET action="./listUsers.pl">
+		$info=$info.'<br><br><br><form method=POST action="./listUsers.pl">
+			<input type=hidden name=user value="'.$user.'">
+			<input type=hidden name=password value="'.$password.'">
 			<input type=submit value="Modificar permisos" style="height: 30px;">
 		</form>';
 	}

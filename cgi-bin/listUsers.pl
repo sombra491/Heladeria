@@ -2,7 +2,6 @@
 use strict;
 use CGI ':standard';
 use DBI;
-my $articulo = param('articulo');
 my $user = param('user');
 my $password = param('password');
 ##abrimos el BD
@@ -15,15 +14,40 @@ my $driver="mysql";
 my $dbh = DBI-> connect ("dbi:$driver:database=$base_datos;
 host=$host", $usuario, $clave)
 || die "nError al abrir la base datos: $DBI::errstrn";
-##operaciones
-my $sth = $dbh->prepare("DELETE FROM articulos WHERE (articulo=?)");
-$sth->execute($articulo);
-$sth->finish;
-my $info='<form method=POST action="./list.pl">
+##select
+my $permiso;
+	my $sth1 = $dbh->prepare("SELECT * FROM usuario");
+	$sth1->execute();
+	my $info='<table style="width:100%">
+		<tr>
+		<th><h2>Usuario</h2></th>
+		<th><h2>Permiso</h2></th>
+		<th><h2>Editar o eliminar</h2></th></tr>';
+	while( my @row = $sth1->fetchrow_array ) {
+		$info=$info.'<tr>
+		<th><h2>'.$row[0].'</h2></th>
+		<th><h2>'.$row[2].'</h2></th>
+		<th><form method=GET action="./editUsers.pl">
+				<input type=hidden name=user value="'.$row[0].'">
+				<input type=submit name=modo value="editar" style="height: 30px;">
+				<input type=submit name=modo value="eliminar" style="height: 30px;">
+			</form></th></tr>';
+	}
+	$sth1->finish;
+$info=$info.'</table>';
+$info=$info.'<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
 				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
+	my $sth = $dbh->prepare("SELECT * FROM usuario where(user=?)");
+	$sth->execute($user);
+	while( my @row = $sth->fetchrow_array ) {
+	$permiso=$row[2]; 
+	}
+$sth->finish;
+if ($permiso eq "gerente"){}		
+else {$info='No tiene permiso de ver esto';}
 ##Nos desconectamos de la BD.
 $dbh-> disconnect ||
 warn "nFallo al desconectar.nError: $DBI::errstrn";
@@ -34,7 +58,7 @@ print <<ENDHTML;
 <head>
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
-	<title>Eliminando</title>
+	<title>Comprando</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
@@ -48,7 +72,6 @@ print <<ENDHTML;
 </table>
 <center>
 $info
-<h4> se borro correctamente</h4>
 </center>
 </body>
 </html>

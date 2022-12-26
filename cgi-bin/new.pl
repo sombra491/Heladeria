@@ -6,6 +6,8 @@ my $articulo = param('articulo');
 my $cantidad = param('cantidad');
 my $costo = param('costo');
 my $edit = param('edit');
+my $user = param('user');
+my $password = param('password');
 ##abrimos el BD
 my $host="servidor"; 
 my $base_datos="heladeria";  
@@ -33,7 +35,9 @@ if($articulo_aux eq ""){
 	$info='<h4>Se creo el articulo '.$articulo.'</h4>'.
 	'<h4>Con la cantidad '.$cantidad.'</h4>'.
 	'<h4>Con el costo '.$costo.'</h4>'.
-	'<form method=GET action="./list.pl">
+	'<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
 				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
 }
@@ -47,11 +51,15 @@ elsif($edit eq "true"){
 	$info='<h4>Se modifico el articulo '.$articulo.'</h4>'.
 	'<h4>Con la cantidad '.$cantidad.'</h4>'.
 	'<h4>Con el costo '.$costo.'</h4>'.
-	'<form method=GET action="./list.pl">
+	'<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
 				<input type=submit value="regresar" style="height: 30px;">
 			</form>';
 }
-else {$info='<form method=GET action="./new.pl">
+else {$info='<form method=POST action="./new.pl">
+			<input type=hidden name=user value="'.$user.'">
+			<input type=hidden name=password value="'.$password.'">
 			<h4> Articulo</h4> 
 			<input type=text name=articulo size=30 maxlength=30 value="" style="height: 30px;" required>
 			<h4> Costo</h4> 
@@ -60,8 +68,10 @@ else {$info='<form method=GET action="./new.pl">
 			<input type=number name=cantidad size=30 maxlength=30 value="" style="height: 30px;" min=0 required>
 			<input type=submit value="guardar" style="height: 30px;">
 			</form><br><h4>Ya existe el articulo</h4>
-			<form method=GET action="./list.pl">
-				<input type=submit value="cancelar" style="height: 30px;">
+			<form method=POST action="./list.pl">
+				<input type=hidden name=user value="'.$user .'">
+				<input type=hidden name=password value="'.$password .'">
+				<input type=submit value="regresar" style="height: 30px;">
 			</form>';}
 
 
