@@ -38,9 +38,12 @@ if($articulo_aux eq ""){
 			</form>';
 }
 elsif($edit eq "true"){
-	my $sth1 = $dbh->prepare("UPDATE articulos SET cantidad=? costo=? where articulo=?");
-	$sth1->execute($cantidad, $costo , $articulo);
-	$sth1->finish;
+	my $sth2 = $dbh->prepare("UPDATE articulos SET cantidad=? where articulo=?");
+	$sth2->execute($cantidad, $articulo);
+	$sth2->finish;
+	$sth2 = $dbh->prepare("UPDATE articulos SET costo=? where articulo=?");
+	$sth2->execute($costo, $articulo);
+	$sth2->finish;
 	$info='<h4>Se modifico el articulo '.$articulo.'</h4>'.
 	'<h4>Con la cantidad '.$cantidad.'</h4>'.
 	'<h4>Con el costo '.$costo.'</h4>'.
@@ -74,7 +77,7 @@ print <<ENDHTML;
 <head>
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
-	<title>Registro</title>
+	<title>Creando</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>

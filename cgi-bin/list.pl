@@ -62,7 +62,7 @@ elsif($password_aux eq $password){
 	while( my @row = $sth1->fetchrow_array ) {
 		$info=$info.'<tr>
 		<th><h2>'.$row[0].'</h2></th>
-		<th><h2>'.$row[2].'</h2></th>
+		<th><h2>S/.'.$row[2].'</h2></th>
 		<th><h2>'.$row[1].'</h2></th>
 		<th><h2><form method=GET action="./comprar.pl">
 				<input type=hidden name=articulo value="'.$row[0].'">
@@ -109,7 +109,9 @@ elsif($password_aux eq $password){
 		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'none'".'">Ocultar</button>';	
 	}
 	if($permiso eq "gerente"){
-		##modifcador de permiso en proceso
+		$info=$info.'<br><br><br><form method=GET action="./listUsers.pl">
+			<input type=submit value="Modificar permisos" style="height: 30px;">
+		</form>';
 	}
 }
 else {$info=$error.'<br><h4>Contraseña incorrecta</h4>';}
@@ -124,7 +126,7 @@ print <<ENDHTML;
 <head>
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
-	<title>Registro</title>
+	<title>Lista de productos</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>

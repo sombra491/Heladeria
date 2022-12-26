@@ -31,24 +31,28 @@ $sth->finish;
 my $error='<form method=GET action="./comprar.pl">
 			<h4>'.$articulo.' </h4>
 			<input type=hidden name=articulo value="'.$articulo.'">
-			<h4> Costo es de'.$costo.'</h4> 
+			<h4> Costo es de S/.'.$costo.'</h4> 
 			<h4> Cantidad</h4> 
 			<input type=number name=cantidad size=30 maxlength=30 value=$cantidad_aux style="height: 30px;" min=0 required>
-			<input type=submit value="guardar" style="height: 30px;">
+			<input type=submit value="comprar" style="height: 30px;">
 			</form>
 			<form method=GET action="./list.pl">
 				<input type=submit value="cancelar" style="height: 30px;">
 			</form>';
 ##condicionales
-my $resultante=$cantidad;
+my $resultante=$cantidad_aux-$cantidad;
 my $multi=$cantidad*$costo;
 if($cantidad eq ""){$info=$error;}
 elsif($resultante>=0){
+	my $sth1 = $dbh->prepare("UPDATE articulos SET cantidad=? where articulo=?");
+	$sth1->execute($resultante, $articulo);
+	$sth1->finish;
 	$info='	<h4> Articulo</h4> 
 	<h4>'.$articulo.'</h4>
-	<h4> Costo '.$costo.'</h4>
+	<h4> Costo S/.'.$costo.'</h4>
 	<h4> Cantidad '.$cantidad.'</h4>
 	<h4> Pago total es  '.$multi.'</h4>
+	<button onclick="window.print()">imprime recibo</button><br><br><br>
 	<form method=GET action="./list.pl">
 				<input type=submit value="Retroceder" style="height: 30px;">
 			</form>';
@@ -67,7 +71,7 @@ print <<ENDHTML;
 <head>
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
-	<title>Registro</title>
+	<title>Comprando</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>

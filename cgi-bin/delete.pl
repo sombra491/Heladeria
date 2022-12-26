@@ -30,7 +30,7 @@ print <<ENDHTML;
 <head>
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
-	<title>Registro</title>
+	<title>Eliminando</title>
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
