@@ -58,7 +58,7 @@ elsif($resultante>=0){
 	<h4>'.$articulo.'</h4>
 	<h4> Costo S/.'.$costo.'</h4>
 	<h4> Cantidad '.$cantidad.'</h4>
-	<h4> Pago total es  '.$multi.'</h4>
+	<h4> Pago total es S/.'.$multi.'</h4>
 	<button onclick="window.print()">imprime recibo</button><br><br><br>
 	<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">

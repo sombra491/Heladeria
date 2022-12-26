@@ -52,7 +52,7 @@ elsif($password eq $password2){
 	$sth1->finish;
 	$info='<h4>Se creo el usuario '.$userName .'</h4>';
 }
-else {$info=$error.'<br><h4>No conciden los passwords</h4>';}
+else {$info=$error.'<br><h4>No conciden las contraseñas</h4>';}
 ##Nos desconectamos de la BD.
 $dbh-> disconnect ||
 warn "nFallo al desconectar.nError: $DBI::errstrn";

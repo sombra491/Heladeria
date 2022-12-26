@@ -21,6 +21,8 @@ my $permiso;
 my $info;
 my $error='
 	<form method=POST action="./list.pl">
+			<input type=hidden name=user value="'.$user.'">
+			<input type=hidden name=password value="'.$password.'">
 			<h4> Usuario</h4> 
 			<input type=text name=user size=100 maxlength=50 value="" style="height: 30px;" required>
 			<h4> Contraseña</h4> 
@@ -108,6 +110,8 @@ elsif($password_aux eq $password){
 		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'block'".'">Nuevo articulo</button>';
 			$info=$info.'<div id="new"  style="display:none">
 			<form method=POST action="./new.pl">
+			<input type=hidden name=user value="'.$user.'">
+			<input type=hidden name=password value="'.$password.'">
 			<h4> Articulo</h4> 
 			<input type=text name=articulo size=30 maxlength=30 value="" style="height: 30px;" required>
 			<h4> Costo</h4> 
