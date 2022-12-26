@@ -65,7 +65,7 @@ elsif($password_aux eq $password){
 		<th><h2>'.$row[2].'</h2></th>
 		<th><h2>'.$row[1].'</h2></th>
 		<th><h2><form method=GET action="./comprar.pl">
-				<input type=hidden name=articulo value='.$row[0].'>
+				<input type=hidden name=articulo value="'.$row[0].'">
 				<input type=submit value="comprar" style="height: 30px;">
 			</form></h2></th>';
 		if($permiso eq "cliente"){	
