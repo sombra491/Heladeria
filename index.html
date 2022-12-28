@@ -1,28 +1,35 @@
 <html>
+
 <head>
- 	<!-- La cabecera del index-->
-	<meta charset="utf-8"> 	
-	<title>Inicio</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<!-- La cabecera del index-->
+	<meta charset="utf-8">
+	<title>Articulo</title>
+	<link rel="stylesheet" href="./stl.css">
 </head>
+
 <body>
-<table style="width:100%">
-  <tr>
-    <th>
-	<h2><a href="index.html">Iniciar seccion</a> </h2></th>
-    <th>
-	<h2><a href="registrarse.html">Registrarse</a> </h2></th>
-  </tr>
-</table>
-<center>
-	<form method=POST action="./cgi-bin/list.pl">
-			<h4> Usuario</h4> 
-			<input type=text name=user size=100 maxlength=50 value="" style="height: 30px;" required>
-			<h4> Contraseña</h4> 
-			<input type=password name=password size=100 maxlength=50 value="" style="height: 30px;" required>
-			<br><br>
-			<input type=submit value="iniciar" style="height: 30px;">
-	</form>
-</center>
+	<table style="width:100%" class="opciones">
+		<tr>
+			<th>
+				<h2><a href="index.html">Iniciar sesión</a> </h2>
+			</th>
+			<th>
+				<h2><a href="registrarse.html">Registrarse</a> </h2>
+			</th>
+		</tr>
+	</table>
+	<center>
+		<div class="container">
+			<form method=POST action="./cgi-bin/list.pl">
+				<h4> Usuario</h4>
+				<input type=text name=user size=70 maxlength=50 value="" style="height: 30px;" required>
+				<h4> Contraseña</h4>
+				<input type=password name=password size=70 maxlength=50 value="" style="height: 30px;" required>
+				<br><br>
+				<input type=submit value="Iniciar" style="height: 45px; width: 100px;" class="send">
+			</form>
+		</div>
+	</center>
 </body>
+
 </html>

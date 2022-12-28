@@ -19,6 +19,14 @@ my $dbh = DBI-> connect ("dbi:$driver:database=$base_datos;
 host=$host", $usuario, $clave)
 || die "nError al abrir la base datos: $DBI::errstrn";
 ##condicionales
+	my $permiso;
+	my $sth = $dbh->prepare("SELECT * FROM usuario where(user=?)");
+	$sth->execute($user);
+	while( my @row = $sth->fetchrow_array ) {
+	$permiso=$row[2]; 
+	}
+$sth->finish;
+if ($permiso eq "gerente"){
 if($modo eq "eliminar"){
 my $sth1 = $dbh->prepare("DELETE FROM usuario WHERE (user=?)");
 $sth1->execute($userEdit);
@@ -27,7 +35,7 @@ $info='<h4>Se borro la cuenta '.$userEdit.'</h4>
 <form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 			</form>';
 }
 elsif($nuevoPermiso eq ""){
@@ -42,12 +50,12 @@ $info='<form method=POST action="./editUsers.pl">
 				<option>encargado</option>
 				<option>gerente</option>
 				</select>
-				<input type=submit value="Cambiar" style="height: 30px;">
+				<input type=submit value="Cambiar" style="height: 30px;" class="send">
 				</form>
 				<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 				</form>'
 }
 elsif(($nuevoPermiso eq "cliente")||($nuevoPermiso eq "encargado")||($nuevoPermiso eq "gerente")){
@@ -58,18 +66,11 @@ elsif(($nuevoPermiso eq "cliente")||($nuevoPermiso eq "encargado")||($nuevoPermi
 			<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 			</form>';}
 
 
-	my $permiso;
-	my $sth = $dbh->prepare("SELECT * FROM usuario where(user=?)");
-	$sth->execute($user);
-	while( my @row = $sth->fetchrow_array ) {
-	$permiso=$row[2]; 
-	}
-$sth->finish;
-if ($permiso eq "gerente"){}		
+}		
 else {$info='No tiene permiso de ver esto';}
 ##Nos desconectamos de la BD.
 $dbh-> disconnect ||
@@ -82,10 +83,10 @@ print <<ENDHTML;
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
 	<title>Comprando</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" href="./../stl.css">
 </head>
 <body>
-<table style="width:100%">
+<table style="width:100%" class="opciones">
   <tr>
     <th>
 	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>

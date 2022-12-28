@@ -1,0 +1,108 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(244, 228, 245);
+}
+
+.container-slider {
+    width: 60%;
+    max-width: 600px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    width: 400%;
+    height: 400px;
+    margin-left: -100%;
+}
+
+.slider__section {
+    width: 100%;
+}
+
+.slider__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider__btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.7);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider__btn:hover {
+    background-color: white;
+}
+
+.slider__btn--left {
+    left: 10px;
+}
+
+.slider__btn--right {
+    right: 10px;
+}
+
+
+.contenedor input {
+    border: 1px solid rgb(151, 97, 149);
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    padding: 2px;
+
+}
+
+.send {
+    background-color: rgb(224, 151, 162);
+    font-size: 100%;
+    color: white;
+}
+
+h4 {
+    color: rgb(151, 97, 149);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+a:link,
+a:visited {
+    color: rgba(112, 36, 112, 0.774);
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    background-color: rgba(235, 163, 235, 0.548);
+    padding: 8px;
+}
+
+h1{
+    background-color: rgba(139, 62, 139, 0.548);
+    color: white;
+}

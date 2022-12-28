@@ -20,6 +20,7 @@ my $password_aux;
 my $permiso;
 my $info;
 my $error='
+	<div class="container">
 	<form method=POST action="./list.pl">
 			<input type=hidden name=user value="'.$user.'">
 			<input type=hidden name=password value="'.$password.'">
@@ -28,8 +29,8 @@ my $error='
 			<h4> Contraseña</h4> 
 			<input type=password name=password size=100 maxlength=50 value="" style="height: 30px;" required>
 			<br><br>
-			<input type=submit value="iniciar" style="height: 30px;">
-	</form>';
+			<input type=submit value="iniciar" style="height: 30px;"  class="send">
+	</form></div>';
 ##select
 my $sth = $dbh->prepare("SELECT * FROM usuario WHERE (user=?)");
 $sth->execute($user);
@@ -70,7 +71,7 @@ elsif($password_aux eq $password){
 				<input type=hidden name=user value="'.$user.'">
 				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
-				<input type=submit value="comprar" style="height: 30px;">
+				<input type=submit value="comprar" style="height: 30px;" class="send">
 			</form></h2></th>';
 		if($permiso eq "cliente"){	
 		$info=$info.'</tr>';}
@@ -79,13 +80,13 @@ elsif($password_aux eq $password){
 				<input type=hidden name=user value="'.$user.'">
 				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
-				<input type=submit value="editar" style="height: 30px;">
+				<input type=submit value="editar" style="height: 30px;" class="send">
 				</form></h2></th>
 				<th><h2><form method=POST action="./delete.pl">
 				<input type=hidden name=user value="'.$user.'">
 				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
-				<input type=submit value="borrar" style="height: 30px;">
+				<input type=submit value="borrar" style="height: 30px;" class="send">
 			</form></h2></th>
 		</tr>';}
 		elsif($permiso eq "gerente"){	
@@ -93,13 +94,13 @@ elsif($password_aux eq $password){
 				<input type=hidden name=user value="'.$user.'">
 				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
-				<input type=submit value="editar" style="height: 30px;">
+				<input type=submit value="editar" style="height: 30px;" class="send">
 				</form></h2></th>
 				<th><h2><form method=POST action="./delete.pl">
 				<input type=hidden name=user value="'.$user.'">
 				<input type=hidden name=password value="'.$password.'">
 				<input type=hidden name=articulo value="'.$row[0].'">
-				<input type=submit value="borrar" style="height: 30px;">
+				<input type=submit value="borrar" style="height: 30px;" class="send">
 			</form></h2></th>
 		</tr>';}
 		else {$info="";}
@@ -107,7 +108,7 @@ elsif($password_aux eq $password){
 	$sth1->finish;
 	$info=$info.'</table>';
 	if(($permiso eq "encargado")||($permiso eq "gerente")){
-		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'block'".'">Nuevo articulo</button>';
+		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'block'".'" class="send">Nuevo articulo</button>';
 			$info=$info.'<div id="new"  style="display:none">
 			<form method=POST action="./new.pl">
 			<input type=hidden name=user value="'.$user.'">
@@ -118,15 +119,15 @@ elsif($password_aux eq $password){
 			<input type=number name=costo size=30 maxlength=30 value="" style="height: 30px;" step=0.01 min=0 required>
 			<h4> Cantidad</h4> 
 			<input type=number name=cantidad size=30 maxlength=30 value="" style="height: 30px;" min=0 required>
-			<input type=submit value="guardar" style="height: 30px;">
+			<input type=submit value="guardar" style="height: 30px;" class="send">
 			</form>'.'</div>';
-		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'none'".'">Ocultar</button>';	
+		$info=$info.'<button type="button" onclick="document.getElementById('."'new'".').style.display='."'none'".'" class="send">Ocultar</button>';	
 	}
 	if($permiso eq "gerente"){
 		$info=$info.'<br><br><br><form method=POST action="./listUsers.pl">
 			<input type=hidden name=user value="'.$user.'">
 			<input type=hidden name=password value="'.$password.'">
-			<input type=submit value="Modificar permisos" style="height: 30px;">
+			<input type=submit value="Modificar permisos" style="height: 30px;" class="send">
 		</form>';
 	}
 }
@@ -139,21 +140,25 @@ warn "nFallo al desconectar.nError: $DBI::errstrn";
 print "Content-type: text/html\n\n";
 print <<ENDHTML;
 <html>
+
 <head>
- 	<!-- La cabecera del index-->
-	<meta charset="utf-8"> 	
-	<title>Lista de productos</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<!-- La cabecera del index-->
+	<meta charset="utf-8">
+	<title>Articulo</title>
+	<link rel="stylesheet" href="./../stl.css">
 </head>
+
 <body>
-<table style="width:100%">
-  <tr>
-    <th>
-	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>
-    <th>
-	<h2><a href="../registrarse.html">Registrarse</a> </h2></th>
-  </tr>
-</table>
+	<table style="width:100%" class="opciones">
+		<tr>
+			<th>
+				<h2><a href="../index.html">Iniciar sesión</a> </h2>
+			</th>
+			<th>
+				<h2><a href="../registrarse.html">Registrarse</a> </h2>
+			</th>
+		</tr>
+	</table>
 <center>
 $info
 </center>

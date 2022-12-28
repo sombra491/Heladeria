@@ -88,10 +88,10 @@ print <<ENDHTML;
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
 	<title>Creando</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" href="./../stl.css">
 </head>
 <body>
-<table style="width:100%">
+<table style="width:100%" class="opciones">
   <tr>
     <th>
 	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>

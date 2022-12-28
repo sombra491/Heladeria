@@ -22,7 +22,7 @@ $sth->finish;
 my $info='<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 			</form>';
 ##Nos desconectamos de la BD.
 $dbh-> disconnect ||
@@ -35,10 +35,10 @@ print <<ENDHTML;
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
 	<title>Eliminando</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" href="./../stl.css">
 </head>
 <body>
-<table style="width:100%">
+<table style="width:100%" class="opciones">
   <tr>
     <th>
 	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>

@@ -1,0 +1,51 @@
+body {
+    background-image: url("imgs/fondo1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.container input {
+    border: 1px solid rgb(151, 97, 149);
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    padding: 2px;
+
+}
+
+.send {
+    background-color: lightpink;
+    font-size: 100%;
+    color: white;
+}
+
+h4 {
+    color: rgb(151, 97, 149);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h2 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.opciones {
+    background-color: rgba(139, 62, 139, 0.548);
+}
+
+a:link,
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    background-color: rgba(112, 50, 112, 0.548);
+    padding: 8px;
+}

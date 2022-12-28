@@ -30,7 +30,8 @@ while( my @row = $sth->fetchrow_array ) {
 	$costo=$row[2];
 	}
 $sth->finish;
-my $error='<form method=POST action="./comprar.pl">
+my $error='
+			<form method=POST action="./comprar.pl">
 			<input type=hidden name=user value="'.$user.'">
 			<input type=hidden name=password value="'.$password.'">
 			<h4>'.$articulo.' </h4>
@@ -38,12 +39,12 @@ my $error='<form method=POST action="./comprar.pl">
 			<h4> Costo es de S/.'.$costo.'</h4> 
 			<h4> Cantidad</h4> 
 			<input type=number name=cantidad size=30 maxlength=30 value=$cantidad_aux style="height: 30px;" min=0 required>
-			<input type=submit value="comprar" style="height: 30px;">
+			<input type=submit value="comprar" style="height: 30px;" class="send">
 			</form>
 			<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 			</form>';
 ##condicionales
 my $resultante=$cantidad_aux-$cantidad;
@@ -63,7 +64,7 @@ elsif($resultante>=0){
 	<form method=POST action="./list.pl">
 				<input type=hidden name=user value="'.$user .'">
 				<input type=hidden name=password value="'.$password .'">
-				<input type=submit value="regresar" style="height: 30px;">
+				<input type=submit value="regresar" style="height: 30px;" class="send">
 			</form>';
 }
 else {$info=$error.'<h4>No existe esa cantidad de productos</h4>';}
@@ -81,10 +82,10 @@ print <<ENDHTML;
  	<!-- La cabecera del index-->
 	<meta charset="utf-8"> 	
 	<title>Comprando</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" href="./../stl.css">
 </head>
 <body>
-<table style="width:100%">
+<table style="width:100%" class="opciones">
   <tr>
     <th>
 	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>

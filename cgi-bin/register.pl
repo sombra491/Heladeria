@@ -19,6 +19,7 @@ host=$host", $usuario, $clave)
 my $userName_aux;
 my $info;
 my $error='
+	<div class="contenedor">
 	<form method=POST action="./register.pl">
 			<h4> Usuario</h4> 
 			<input type=text name=userName size=100 maxlength=50 value="" style="height: 30px;" required>
@@ -27,8 +28,8 @@ my $error='
 			<h4> Contraseña confirmar</h4> 
 			<input type=password name=password2 size=100 maxlength=50 value="" style="height: 30px;" required>
 			<br><br>
-			<input type=submit value="registrarse" style="height: 30px;">
-	</form>';
+			<input type=submit value="registrarse" style="height: 30px;"  class="send">
+	</form></div>';
 my $largoContra=length($password);
 ##select
 my $sth = $dbh->prepare("SELECT * FROM usuario WHERE (user=?)");
@@ -59,22 +60,48 @@ warn "nFallo al desconectar.nError: $DBI::errstrn";
 ##imprimir html
 print "Content-type: text/html\n\n";
 print <<ENDHTML;
-<html>
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
- 	<!-- La cabecera del index-->
-	<meta charset="utf-8"> 	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no,
+	 maximun-scale=1, minimun-scale =1">
 	<title>Registro</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" href="../stl2.css">
 </head>
+
 <body>
-<table style="width:100%">
-  <tr>
-    <th>
-	<h2><a href="../index.html">Iniciar seccion</a> </h2></th>
-    <th>
-	<h2><a href="../registrarse.html">Registrarse</a> </h2></th>
-  </tr>
-</table>
+	<div class="container-slider">
+		<div class="slider" id="slider">
+			<div class="slider__section">
+				<img src="../img/img1.jpg" alt="" class="slider__img">
+			</div>
+			<div class="slider__section">
+				<img src="../img/img2.jpg" alt="" class="slider__img">
+			</div>
+			<div class="slider__section">
+				<img src="../img/img3.jpg" alt="" class="slider__img">
+			</div>
+			<div class="slider__section">
+				<img src="../img/img4.jpg " alt="" class="slider__img">
+			</div>
+		</div>
+		<div class="slider__btn slider__btn--right" id="btn-right">&#62</div>
+		<div class="slider__btn slider__btn--left" id="btn-left">&#60</div>
+	</div>
+	<script src="slider.js"></script>
+	<table style="width:100%">
+		<tr>
+			<th>
+				<h2><a href="../index.html">Iniciar sesión</a> </h2>
+			</th>
+			<th>
+				<h2><a href="../registrarse.html">Registrarse</a> </h2>
+			</th>
+		</tr>
+	</table>
 <center>
 $info
 </center>
