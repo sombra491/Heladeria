@@ -22,8 +22,6 @@ my $info;
 my $error='
 	<div class="container">
 	<form method=POST action="./list.pl">
-			<input type=hidden name=user value="'.$user.'">
-			<input type=hidden name=password value="'.$password.'">
 			<h4> Usuario</h4> 
 			<input type=text name=user size=100 maxlength=50 value="" style="height: 30px;" required>
 			<h4> Contraseña</h4> 
